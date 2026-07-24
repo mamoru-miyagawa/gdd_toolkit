@@ -1,7 +1,7 @@
 ---
 name: game-design-assistant
 description: Helps you write a GDD — then challenges it. Reads your code, knows your pillars, cross-references every mechanic against every other, and applies MDA analysis. Always leaves decisions to you.
-version: 2.1.0
+version: 2.2.0
 author: Mamoru Miyagawa
 license: MIT
 metadata:
@@ -29,7 +29,7 @@ This skill does NOT generate placeholder content, write story for you, or make d
 You say "let's write the GDD" or start a new project. The skill guides you through:
 
 1. **Vision Lock** — define pillars, audience, genre, scope. These become the filter for every decision.
-2. **Core Loop** — define the 5-15 second loop the player repeats. Mermaid flowchart + prose.
+2. **Core Loop** — find the minimum fun unit. What's the simplest repeatable thing the player does that they keep wanting to do? 3-5 nodes max. Show it as ASCII in chat, save as Mermaid in the doc.
 3. **Feature & System Design** — add features one at a time. Each goes through the Pillar Gate.
 4. **Pairwise Matrix** — every feature tested against every other. You choose when to run it.
 5. **Balance & Tuning** — numbers, curves, formulas. No prose-only tuning accepted.
@@ -91,32 +91,31 @@ The skill maintains a separate folder — the second brain — alongside your pr
 
 ## Design Pillars
 
-Pillars are the central validation axis. They're specific, observable, contradictable statements about what the player experiences.
+Pillars are the **conceptual and contextual rules** that guide every design decision. They are not rigid checklists — they're principles that tell you whether a feature *belongs* in this game.
 
-### Good pillars
+A good pillar captures the game's identity in a way that helps you answer "does this belong here?" when you're unsure. It should have a clear direction — it pushes toward some things and pushes against others.
 
-```
-"The player can complete any level without attacking."
-"Combat encounters take <60 seconds."
-"The player can always see their next objective."
-```
-
-A pillar names what it **enables**, what it **forbids**, and how you'd **verify** it. The "what it forbids" line is the most important — a pillar that can't be violated filters nothing.
-
-### Pillar anatomy
+### Examples
 
 ```
-PILLAR: <short name>
-  Statement: <the player experience, in one sentence>
-  What this enables: <designs this pillar unlocks>
-  What this forbids: <designs this pillar rejects>
-  How we verify: <testable criterion>
-  Tensions: <which other pillars this conflicts with>
+PILLAR: Emergent Chaos
+  Principle: The game creates interesting situations through system interactions, not scripted events.
+  Guides decisions: Features that enable player-driven stories get priority.
+  Pushes against: Scripted set-pieces, linear progression, dialogue trees.
+
+PILLAR: Learn by Doing
+  Principle: The player figures out mechanics through experimentation, not reading.
+  Guides decisions: Tutorials are environmental, systems are intuitive, failure is informative.
+  Pushes against: Text pop-ups, ability gating, modal tutorial levels.
 ```
 
-### Pillar evolution
+### What to define per pillar
 
-Pillars can change — refined, split, merged, replaced. Every change is logged to `.design-context/pillars.md` with the rationale. This is how the skill tracks why the design went the way it did.
+- **Principle** — the core idea, one sentence. What is this game about?
+- **How it guides decisions** — how you'd use this pillar when evaluating a feature. A lens, not a rule.
+- **What it pushes against** — the kinds of features this pillar resists. A pillar that never conflicts filters nothing.
+
+Pillars can evolve. Log changes to `.design-context/pillars.md`.
 
 ### The central rule
 
@@ -150,7 +149,34 @@ If the skill spots a tension, it surfaces it: "This feature supports <Pillar A> 
 
 **You decide.** The skill logs the decision and rationale to `.design-context/design-log.md` and continues.
 
-### Step 4: Pairwise Interaction Matrix (optional, run on demand)
+### Step 4: Flowcharts — ASCII in chat, Mermaid in docs
+
+Mermaid is great for rendered docs (Obsidian, GitHub) but **unreadable as raw text in a terminal**. When showing flowcharts in conversation, use ASCII diagrams:
+
+```
+  [Observe] ──→ [Decide] ──→ [Act] ──→ [Feedback]
+                   ↑                        │
+                   └────────────────────────┘
+```
+
+Vertical for complex flows:
+
+```
+  Player sees enemy
+         ↓
+  Choose weapon
+    ↙      ↘
+ Attack   Sneak
+    ↓        ↓
+ Deal DMG  Bypass
+    ↓        ↓
+  Enemy    Loot
+  reacts   room
+```
+
+Save the Mermaid version to the GDD doc file for when it's viewed in a renderer. Never paste raw Mermaid code in a conversation.
+
+### Step 5: Pairwise Interaction Matrix (optional, run on demand)
 
 When you say "run the matrix," the skill tests every feature against every other:
 

@@ -1,7 +1,7 @@
 {
   "id": "game-design-assistant",
   "name": "Game Design Assistant",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "A disciplined game design co-pilot. Helps write GDDs, validates features against pillars, cross-references mechanics, applies MDA analysis, and audits code-vs-GDD alignment.",
   "author": "Mamoru Miyagawa",
   "license": "MIT",

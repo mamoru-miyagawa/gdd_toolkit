@@ -105,40 +105,34 @@ def cmd_template(args):
 
 
 def cmd_pillar(args):
-    """Validate a pillar statement."""
+    """Evaluate a pillar for clarity and usefulness."""
     statement = args.statement
     issues = []
 
-    if len(statement) < 15:
-        issues.append("Too short — a pillar needs a concrete scenario, not a label.")
+    if len(statement) < 10:
+        issues.append("Very short. A pillar should describe a guiding principle, not just a label.")
 
-    vague_words = ["fun", "engaging", "immersive", "enjoyable", "great", "good", "cool", "interesting"]
+    vague_words = ["fun", "engaging", "nice", "cool", "interesting"]
     found_vague = [w for w in vague_words if w in statement.lower()]
     if found_vague:
-        issues.append(f"Contains vague word(s): {', '.join(found_vague)}. Pillars must be observable, not feelings.")
+        issues.append(f"Uses vague word(s): {', '.join(found_vague)}. "
+                       "Try describing what the player actually does or experiences.")
 
-    # Check specific/observable: does it describe what the player DOES or experiences?
-    player_verbs = ["can", "will", "must", "should", "never", "always", "the player"]
-    if not any(v in statement.lower() for v in player_verbs):
-        issues.append("Doesn't describe what the player can/will do. A pillar is a player-experience constraint.")
+    # Check direction: does it have a clear "this way, not that way" feel?
+    direction_words = ["not", "never", "without", "instead", "rather than", "avoid", "rejects", "pushes against"]
+    if not any(w in statement.lower() for w in direction_words):
+        issues.append("No clear direction. What does this pillar push against? "
+                      "A pillar that doesn't exclude anything doesn't guide decisions.")
 
-    # Check contradictable: can we imagine a design decision that violates it?
-    # A good heuristic: if you can't think of what it forbids, it's not a constraint.
-    # We can't really test this programmatically, but we can flag if it's too generic.
-    if len(statement.split()) < 8:
-        issues.append("Very short — may not be specific enough to act as a real constraint.")
-
-    # Check opinionated: does it exclude something?
-    forbidding_words = ["without", "never", "no", "cannot", "avoid", "instead of", "rather than"]
-    if not any(w in statement.lower() for w in forbidding_words):
-        issues.append("No 'forbidding' clause. Consider adding what this pillar rejects — "
-                      "that's the most important part.")
+    # Check if it describes a principle vs just a feature
+    if len(statement.split()) < 5:
+        issues.append("Try expanding: what's the core idea, and what does it mean for the player experience?")
 
     if not issues:
-        print("✓ STRONG PILLAR — specific, observable, contradictable, opinionated.")
+        print("✓ This pillar has a clear direction and guiding principle.")
         return 0
     else:
-        print("⚠ PILLAR NEEDS WORK:")
+        print("⚠ This pillar could be sharper:")
         for i, issue in enumerate(issues, 1):
             print(f"  {i}. {issue}")
         return 1

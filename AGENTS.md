@@ -15,7 +15,7 @@ This does NOT generate placeholder content, write story for you, or make decisio
 ### Mode 1 — Write the GDD (the primary path)
 
 1. **Vision Lock** — define pillars, audience, genre, scope. These become the filter for every decision.
-2. **Core Loop** — define the 5-15 second loop. Mermaid flowchart + prose.
+2. **Core Loop** — find the minimum fun unit. What's the simplest repeatable thing the player does that they keep wanting to do? 3-5 nodes max. Show it as ASCII in chat, save as Mermaid in the doc.
 3. **Feature & System Design** — add features one at a time, each checked against the pillars.
 4. **Pairwise Matrix** (optional) — every feature tested against every other. Run on demand.
 5. **Balance & Tuning** — numbers, curves, formulas. No prose-only tuning.
@@ -57,28 +57,31 @@ The assistant maintains a sidecar folder — the second brain — alongside the 
 
 ## Design Pillars
 
-Pillars are the central validation axis. They are specific, observable, contradictable statements about what the player experiences.
+Pillars are the **conceptual and contextual rules** that guide every design decision. They are not rigid checklists — they're principles that tell you whether a feature *belongs* in this game.
 
-### Good pillars
+A good pillar captures the game's identity in a way that helps you answer "does this belong here?" when you're unsure. It should have a clear direction — it pushes toward some things and pushes against others — but it doesn't need to be a testable hypothesis.
 
-```
-"The player can complete any level without attacking."
-"Combat encounters take <60 seconds."
-"The player can always see their next objective."
-```
-
-### Pillar anatomy
+### Examples
 
 ```
-PILLAR: <short name>
-  Statement: <the player experience, in one sentence>
-  What this enables: <designs this pillar unlocks>
-  What this forbids: <designs this pillar rejects — the most important line>
-  How we verify: <testable criterion>
-  Tensions: <which other pillars this conflicts with>
+PILLAR: Emergent Chaos
+  Principle: The game creates interesting situations through system interactions, not scripted events.
+  Guides decisions: Features that enable player-driven stories (physics, AI factions, dynamic economies) get priority.
+  Pushes against: Scripted set-pieces, linear progression, dialogue trees.
+
+PILLAR: Learn by Doing
+  Principle: The player figures out mechanics through experimentation, not reading.
+  Guides decisions: Tutorials are environmental, systems are intuitive, failure is informative.
+  Pushes against: Text pop-ups, ability gating, modal tutorial levels.
 ```
 
-Pillars can change — refined, split, merged, replaced. Every change is logged to `.design-context/pillars.md` with the rationale.
+### What to define per pillar
+
+- **Principle** — the core idea, one sentence. What is this game about?
+- **How it guides decisions** — how you'd use this pillar when evaluating a feature. Not a rule, a lens.
+- **What it pushes against** — the kinds of features this pillar would resist. This is the most important part: a pillar that never conflicts with anything filters nothing.
+
+Pillars can evolve — refined, split, merged. Log changes to `.design-context/pillars.md` with the rationale.
 
 ---
 
@@ -95,6 +98,39 @@ Does it contradict anything?           → if yes, block until resolved
 ```
 
 A feature that fails any check is surfaced to the user. The user decides.
+
+---
+
+## Flowcharts in Chat
+
+Mermaid is great for rendered docs (Obsidian, GitHub) but **unreadable as raw text in a terminal**. When showing flowcharts in chat:
+
+- **In conversation:** use ASCII diagrams like these instead:
+
+```
+  [Observe] ──→ [Decide] ──→ [Act] ──→ [Feedback]
+                   ↑                        │
+                   └────────────────────────┘
+```
+
+Vertical for complex flows:
+
+```
+  Player sees enemy
+         ↓
+  Choose weapon
+    ↙      ↘
+ Attack   Sneak
+    ↓        ↓
+ Deal DMG  Bypass
+    ↓        ↓
+  Enemy    Loot
+  reacts   room
+```
+
+- **In the GDD doc file:** save the Mermaid version for rendering (` ```mermaid flowchart TD ... ``` `)
+- The rule is simple: **ASCII in chat, Mermaid in the doc**. Never paste raw Mermaid code in a conversation and expect the user to read it.
+- `python gdd.py matrix Jump,Run,Attack` also outputs a plain text table, not Mermaid.
 
 ---
 
