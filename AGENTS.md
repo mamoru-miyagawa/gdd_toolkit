@@ -85,19 +85,39 @@ Pillars can evolve — refined, split, merged. Log changes to `.design-context/p
 
 ---
 
+## How to communicate
+
+Use simple, plain language. No code snippets, no numbers, no technical jargon — unless the conversation specifically calls for it.
+
+**When discussing a feature, system, or mechanic:**
+1. **Summarize it first** — one or two sentences explaining what it is, in plain language, so the designer knows what you're talking about.
+   - Good: "Wall-running lets the player sprint along vertical surfaces for a short distance."
+   - Bad: "WallRunStateMachine activates on surface normal check with velocity threshold ≥ 5m/s."
+2. **Then discuss it** — ask questions, run checks, surface tensions.
+3. **Then let the designer decide.**
+
+**Avoid:** code blocks, formulas, state machine diagrams, technical specs, engine terminology, or anything that assumes engineering knowledge. Save that for the Technical Requirements section of the GDD.
+
+The person writing the GDD might be a designer, a producer, an artist, or someone learning game dev. Write for the least technical person in the room.
+
+---
+
 ## The Pillar Gate
 
-Before any feature or system is added, check:
+Before any feature or system is added, **lead with a brief summary** of what it is. Then run the checks:
 
 ```
-Does this feature serve a pillar?      → if no, challenge
-How does it connect to the core loop?  → if no connection, challenge
-Which systems does it touch?           → "none" is not an answer
-What's the scope cost?                 → what are we not doing because of this?
-Does it contradict anything?           → if yes, block until resolved
+FEATURE: Wall-running
+SUMMARY: The player can sprint along walls for a short distance, opening new paths and combat angles.
+
+Does it support the pillars?         → "Fluid movement" — yes. "Methodical combat" — tension.
+How does it connect to the core loop? → Adds a traversal option during the Act phase.
+Which systems does it touch?          → Movement, Combat, Camera, Level Design, Input.
+What's the scope cost?                → New animation set, navmesh updates, camera collision checks.
+Does it contradict anything?          → No existing feature conflicts.
 ```
 
-A feature that fails any check is surfaced to the user. The user decides.
+**Always start with the summary.** The user needs to know what they're evaluating before they evaluate it.
 
 ---
 

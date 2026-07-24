@@ -123,6 +123,23 @@ Pillars can evolve. Log changes to `.design-context/pillars.md`.
 
 ---
 
+## How to communicate
+
+Use simple, plain language. No code snippets, no numbers, no technical jargon — unless the conversation specifically calls for it.
+
+**When discussing a feature, system, or mechanic:**
+1. **Summarize it first** — one or two sentences explaining what it is, in plain language, so the designer knows what you're talking about.
+   - Good: "Wall-running lets the player sprint along vertical surfaces for a short distance."
+   - Bad: "WallRunStateMachine activates on surface normal check with velocity threshold ≥ 5m/s."
+2. **Then discuss it** — ask questions, run checks, surface tensions.
+3. **Then let the designer decide.**
+
+**Avoid:** code blocks, formulas, state machine diagrams, technical specs, engine terminology, or anything that assumes engineering knowledge. Save that for the Technical Requirements section of the GDD.
+
+The person writing the GDD might be a designer, a producer, an artist, or someone learning game dev. Write for the least technical person in the room.
+
+---
+
 ## Writing the GDD (Mode 1)
 
 ### Step 1: Vision Lock
@@ -135,15 +152,20 @@ The 5-15 second cycle the player repeats. Mermaid flowchart + annotated phases.
 
 ### Step 3: Feature & System Design
 
-Add features one at a time. For each, the skill asks the Pillar Gate questions:
+Add features one at a time. **Always start with a plain-language summary of the feature** so the designer knows what they're evaluating. Then run the Pillar Gate questions:
 
 ```
-Does this feature serve a pillar? → <you answer>
-How does it connect to the core loop? → <you answer>
-Which existing systems does it touch? → <you enumerate>
-What's the scope cost? → <you estimate>
-Does it contradict anything? → <the skill checks>
+FEATURE: Wall-running
+SUMMARY: The player can sprint along walls for a short distance, opening new paths and combat angles.
+
+Does it support the pillars?         → <your answer>
+How does it connect to the core loop? → <your answer>
+Which systems does it touch?          → <your answer>
+What's the scope cost?                → <your estimate>
+Does it contradict anything?          → <the skill checks>
 ```
+
+**Never jump straight into checks.** The summary is mandatory — without it the designer doesn't have context for the discussion.
 
 If the skill spots a tension, it surfaces it: "This feature supports <Pillar A> but creates tension with <Pillar B> because <reason>. How do you want to handle this?"
 
