@@ -105,7 +105,7 @@ This tool exists because most AI game design content is cargo-cult garbage — "
 - It challenges you when something doesn't add up
 - It never makes a decision for you
 
-The most important line in every pillar definition is **"what this forbids."** A pillar that can't be violated filters nothing.
+The most important line in every pillar definition is **"what it pushes against."** A pillar that can't be challenged filters nothing.
 
 ---
 

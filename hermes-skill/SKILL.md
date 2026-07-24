@@ -345,7 +345,7 @@ The designer decides. Always.
 
 ## Common Pitfalls
 
-1. **Pillars too vague.** "Fun" is not a pillar. If you can't name what it forbids, it's not filtering anything.
+1. **Pillars too vague.** "Fun" is not a pillar. If you can't name what it pushes against, it's not filtering anything.
 2. **Running all tools at once.** The challenge tools are deep. Run one at a time. Let each result inform the next.
 3. **Letting the GDD and code diverge.** Run the code audit periodically. A GDD that describes a different game than the code implements is a liability.
 4. **Not logging overrides.** Every time you accept a tension or override a recommendation, log it. Future-you will need the context. The skill prompts you to log.
@@ -358,7 +358,7 @@ The designer decides. Always.
 ## Verification Checklist
 
 - [ ] GDD exists or is being written — this is the primary objective
-- [ ] Pillars are defined, specific, observable, contradictable
+- [ ] Pillars are defined with a clear direction and something they push against
 - [ ] `.design-context/` is initialized and has a design-log entry for the session
 - [ ] At least one challenge tool has been run (optional but recommended)
 - [ ] All tensions surfaced by the skill have been addressed or explicitly accepted

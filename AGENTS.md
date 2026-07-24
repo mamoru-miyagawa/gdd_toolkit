@@ -232,7 +232,7 @@ This repo includes a standalone Python tool (`gdd.py`) that works on any agent, 
 |---|---|
 | `python gdd.py init` | Create `.design-context/` in current directory |
 | `python gdd.py template GDD-skeleton` | Print a template to stdout (GDD-skeleton, system-design, core-loop-canvas, balance-table, mda-reference, project-context) |
-| `python gdd.py pillar "The player can complete any level without attacking"` | Validate a pillar statement for specificity, observability, contradictability |
+| `python gdd.py pillar "The player can complete any level without attacking"` | Evaluate a pillar for clarity and direction |
 | `python gdd.py matrix Jump,Run,Attack,Shoot` | Generate a pairwise interaction matrix from comma-separated features |
 | `python gdd.py status` | Scan project for GDD + `.design-context/` health |
 
