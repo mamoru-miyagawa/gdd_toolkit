@@ -32,7 +32,7 @@ You say "let's write the GDD" or start a new project. The skill guides you throu
 2. **Core Loop** — find the minimum fun unit. What's the simplest repeatable thing the player does that they keep wanting to do? 3-5 nodes max. Show it as ASCII in chat, save as Mermaid in the doc.
 3. **Feature & System Design** — add features one at a time. Each goes through the Pillar Gate.
 4. **Pairwise Matrix** — every feature tested against every other. You choose when to run it.
-5. **Balance & Tuning** — numbers, curves, formulas. No prose-only tuning accepted.
+5. **Balance & Tuning** — capture the intent and relationships between values. Hard numbers are placeholders that will change during balancing. What matters is: is this gun faster or slower than that one? Does it deal more or less damage? By how much (roughly)?
 6. **Documentation** — structured GDD output you own.
 
 At any point you can say "I want to add a feature" and the skill will help you write it, then surface what it might conflict with — and ask you what you want to do.
@@ -220,7 +220,22 @@ Pairs with undocumented interactions get flagged. You decide whether to document
 
 ### Step 5: Balance & Tuning
 
-Numbers, curves, formulas. Tables with min/max/default and the balance goal.
+Numbers in a GDD are placeholders — they will change during balancing. Capture the **intent and relationships** between values, not the absolute numbers.
+
+Good:
+```
+The pistol is the baseline: fast, reliable, low damage.
+The rifle is about 2x the pistol's damage but slower.
+The shotgun is devastating up close (3-4x pistol) but useless at range.
+```
+
+Not useful:
+```
+Pistol: 10 damage. Rifle: 20 damage. Shotgun: 35 damage.
+```
+(These numbers will change in the first balancing pass. The relationships are what matter.)
+
+The Design Judge flags "tuning theater" — prose that sounds specific without capturing relationships. "Enemies get harder" is useless. "Enemies scale faster than the player, so fights get shorter and more lethal" captures the intent.
 
 ### Step 6: GDD Output
 
@@ -250,7 +265,7 @@ Full adversarial review. Hunts 20 design frauds including:
 
 - Pillar drift (feature without a pillar)
 - Loop orphan (mechanic not connected to core loop)
-- Tuning theater (prose instead of numbers)
+- Tuning theater (prose that sounds like numbers without capturing relationships — "enemies get harder" vs "enemies scale faster than the player does, so fights get shorter and more lethal")
 - GDD-code drift (doc says one thing, code does another)
 - MDA mismatch (pillars say X, mechanics produce Y)
 - Pillar-pillar denial (active tension ignored)

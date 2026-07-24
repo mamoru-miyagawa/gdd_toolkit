@@ -18,7 +18,7 @@ This does NOT generate placeholder content, write story for you, or make decisio
 2. **Core Loop** — find the minimum fun unit. What's the simplest repeatable thing the player does that they keep wanting to do? 3-5 nodes max. Show it as ASCII in chat, save as Mermaid in the doc.
 3. **Feature & System Design** — add features one at a time, each checked against the pillars.
 4. **Pairwise Matrix** (optional) — every feature tested against every other. Run on demand.
-5. **Balance & Tuning** — numbers, curves, formulas. No prose-only tuning.
+5. **Balance & Tuning** — capture the intent and relationships between values. Hard numbers are placeholders that will change during balancing. What matters is: is this gun faster or slower than that one? Does it deal more or less damage? By how much (roughly)?
 6. **GDD Output** — structured document the user owns.
 
 ### Mode 2 — Challenge tools (all optional, run on demand)
@@ -206,7 +206,7 @@ Full adversarial review. Hunts 20 design frauds including:
 
 - Pillar drift (feature without a pillar)
 - Loop orphan (mechanic not connected to core loop)
-- Tuning theater (prose instead of numbers)
+- Tuning theater (prose that sounds like numbers without capturing relationships — "enemies get harder" vs "enemies scale faster than the player does, so fights get shorter and more lethal")
 - GDD-code drift (doc says one thing, code does another)
 - MDA mismatch (pillars say X, mechanics produce Y)
 - Pillar-pillar denial (active tension ignored)

@@ -1,19 +1,43 @@
 # Balance & Tuning Table Template
 
-Prose-only tuning ("enemies get harder") is not accepted. Every tunable value resolves to a table with ranges, defaults, and the curve that governs it.
+Numbers in a GDD are **placeholders** — they will change during balancing. What matters is the **relationship** between values and the **intent** behind them.
+
+Use this template to capture that intent. Hard numbers are optional; relative ordering and rough magnitude are essential.
 
 ---
 
 ## System: <name>
 
-### Stat Block
+### Intent
 
-| Variable | Min | Max | Default | Unit | Scaling |
-|---|---|---|---|---|---|
-| <name> | <value> | <value> | <value> | <seconds, HP, %, etc.> | <none / linear / exponential / custom> |
-| <name> | <value> | <value> | <value> | <seconds, HP, %, etc.> | <none / linear / exponential / custom> |
+Describe what this system is supposed to feel like. This is the most important part — numbers will change but the intent shouldn't:
 
-### Scaling Curve
+```
+The pistol is the baseline: fast, reliable, low damage per shot.
+The rifle is slower but hits harder — about 2x the pistol's damage.
+The shotgun is devastating up close (3-4x pistol) but useless at range.
+```
+
+### Relative Power Ranking
+
+How things compare to each other, without hard numbers:
+
+| Weapon | Damage (relative) | Speed (relative) | Range | Role |
+|---|---|---|---|---|
+| Pistol | 1x (baseline) | Fastest | Medium | Default, reliable |
+| Rifle | 2x pistol | Slower than pistol | Long | Precision, pick off targets |
+| Shotgun | 3-4x pistol | Slowest | Short | Burst damage, close quarters |
+
+### Optional: Hard Numbers (Placeholders)
+
+Fill these in if you have them, but **don't treat them as truth**. They will change.
+
+| Variable | Rough Value | Notes |
+|---|---|---|
+| Pistol damage | ~10 per hit | Tune to feel good against basic enemies |
+| Rifle damage | ~20 per hit | Should 2-shot basic enemies |
+| Shotgun damage | ~35 (7 pellets × 5) | Point-blank should feel devastating |
+| TTK (time to kill) | ~1.5s vs basic enemy | Target for all weapons |
 
 ```yaml
 variable: <name>
