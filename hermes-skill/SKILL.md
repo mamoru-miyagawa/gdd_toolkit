@@ -1,0 +1,303 @@
+---
+name: game-design-assistant
+description: Helps you write a GDD — then challenges it. Reads your code, knows your pillars, cross-references every mechanic against every other, and applies MDA analysis. Always leaves decisions to you.
+version: 2.1.0
+author: Mamoru Miyagawa
+license: MIT
+metadata:
+  hermes:
+    tags: [game-design, gdd, mda-framework, code-analysis, design-pillars, pairwise-analysis, second-brain]
+    related_skills: [fable-method, fable-judge, writing-plans]
+---
+
+# Game Design Assistant
+
+**The primary goal is helping you write a Game Design Document.** Everything below is a tool you can choose to run against what you already have.
+
+This skill does NOT generate placeholder content, write story for you, or make decisions. It:
+- **Writes** — helps you structure and populate a GDD section by section
+- **Reads** — loads your existing GDD, project code, and `.design-context/` to understand where you are
+- **Challenges** — when you ask, it checks your design against your own pillars, runs the pairwise matrix, applies MDA, and audits code-vs-GDD alignment
+- **Leaves decisions to you** — it recommends, flags tensions, and surfaces contradictions. You decide what to do. Every override is logged so future-you knows why.
+
+---
+
+## How it works: two modes
+
+### Mode 1 — Write the GDD (the primary path)
+
+You say "let's write the GDD" or start a new project. The skill guides you through:
+
+1. **Vision Lock** — define pillars, audience, genre, scope. These become the filter for every decision.
+2. **Core Loop** — define the 5-15 second loop the player repeats. Mermaid flowchart + prose.
+3. **Feature & System Design** — add features one at a time. Each goes through the Pillar Gate.
+4. **Pairwise Matrix** — every feature tested against every other. You choose when to run it.
+5. **Balance & Tuning** — numbers, curves, formulas. No prose-only tuning accepted.
+6. **Documentation** — structured GDD output you own.
+
+At any point you can say "I want to add a feature" and the skill will help you write it, then surface what it might conflict with — and ask you what you want to do.
+
+### Mode 2 — Challenge what you have (on-demand tools)
+
+You have a GDD (or a draft, or code) and want to test it. Run any tool:
+
+| Say this | And the skill will |
+|---|---|
+| "audit the code" | Read your GDD, scan your project, compare feature sets. Surface deltas. |
+| "pillar gate this feature" | Check one feature against your pillars, core loop, systems, scope, contradictions. |
+| "run the matrix" | Test every feature against every other. One pair at a time. |
+| "MDA this" | Apply Mechanics-Dynamics-Aesthetics to a feature or scenario. Predict what the player actually experiences. |
+| "judge this design" | Full adversarial review: pillars, scope, pairs, tuning, code drift. |
+| "pillar judge this" | Deep trace of one thing through every pillar. Tensions, trade-offs, recommendation. |
+| "brainstorm <topic>" | Generate ideas. Then help you evaluate each against your pillars. You decide what stays. |
+
+**The skill never modifies your GDD without you asking.** It reads, analyzes, challenges, and writes to `.design-context/` — your GDD only changes when you say so.
+
+---
+
+## The Project Context File (`.design-context/`)
+
+The skill maintains a separate folder — the second brain — alongside your project. This is where it stores:
+
+- **Design log** — every decision and its rationale
+- **Pillar evolution** — how pillars changed over time and why
+- **Tensions** — known conflicts between pillars, features, systems
+- **Rejected ideas** — what was considered and why it was cut
+- **Open questions** — things not yet resolved
+- **MDA analyses** — analysis results
+- **Code audits** — GDD-vs-code comparison snapshots
+- **Design reviews** — Design Judge verdicts
+- **Brainstorming** — raw notes and half-formed ideas
+
+**The GDD is the formal deliverable. `.design-context/` is the skill's memory.** They are separate. The skill reads `.design-context/` at session start and writes to it after every interaction. You can read it too — it's plain markdown.
+
+### Initialize
+
+```
+<project-root>/.design-context/
+├── index.md               # Project overview, current status
+├── design-log.md           # Chronological log of every decision + rationale
+├── pillars.md              # Current pillars + evolution history
+├── rejected-ideas.md       # What was considered and why it was rejected
+├── open-questions.md       # Questions not yet resolved
+├── tensions.md             # Known tensions
+├── mda-analyses/           # MDA results
+├── code-audits/            # Code audit snapshots
+├── design-reviews/         # Design Judge verdicts
+└── brainstorming/          # Raw notes
+```
+
+---
+
+## Design Pillars
+
+Pillars are the central validation axis. They're specific, observable, contradictable statements about what the player experiences.
+
+### Good pillars
+
+```
+"The player can complete any level without attacking."
+"Combat encounters take <60 seconds."
+"The player can always see their next objective."
+```
+
+A pillar names what it **enables**, what it **forbids**, and how you'd **verify** it. The "what it forbids" line is the most important — a pillar that can't be violated filters nothing.
+
+### Pillar anatomy
+
+```
+PILLAR: <short name>
+  Statement: <the player experience, in one sentence>
+  What this enables: <designs this pillar unlocks>
+  What this forbids: <designs this pillar rejects>
+  How we verify: <testable criterion>
+  Tensions: <which other pillars this conflicts with>
+```
+
+### Pillar evolution
+
+Pillars can change — refined, split, merged, replaced. Every change is logged to `.design-context/pillars.md` with the rationale. This is how the skill tracks why the design went the way it did.
+
+### The central rule
+
+**Every design decision traces to at least one pillar.** If it doesn't, it's either an unstated pillar (name it and log it), scope creep, or decoration. The skill surfaces this. You decide.
+
+---
+
+## Writing the GDD (Mode 1)
+
+### Step 1: Vision Lock
+
+Define pillars, audience, genre, platform, scope. No feature work until this exists.
+
+### Step 2: Core Loop
+
+The 5-15 second cycle the player repeats. Mermaid flowchart + annotated phases.
+
+### Step 3: Feature & System Design
+
+Add features one at a time. For each, the skill asks the Pillar Gate questions:
+
+```
+Does this feature serve a pillar? → <you answer>
+How does it connect to the core loop? → <you answer>
+Which existing systems does it touch? → <you enumerate>
+What's the scope cost? → <you estimate>
+Does it contradict anything? → <the skill checks>
+```
+
+If the skill spots a tension, it surfaces it: "This feature supports <Pillar A> but creates tension with <Pillar B> because <reason>. How do you want to handle this?"
+
+**You decide.** The skill logs the decision and rationale to `.design-context/design-log.md` and continues.
+
+### Step 4: Pairwise Interaction Matrix (optional, run on demand)
+
+When you say "run the matrix," the skill tests every feature against every other:
+
+```
+PAIR: Jump + Attack
+  Can the player do both simultaneously? YES
+  Result: Aerial attack. One swing per jump. Resets on landing.
+  Edge cases: Timing differs on ascent vs descent.
+  Status: ✅ Documented
+
+PAIR: Jump + Shoot
+  Can the player do both simultaneously? YES
+  Result: Shooting mid-air, momentum preserved.
+  Edge cases: Sprint-jump + shoot has accuracy penalty.
+  Status: ⚠ Not yet documented — add interaction rules?
+```
+
+Pairs with undocumented interactions get flagged. You decide whether to document, change, or accept the gap.
+
+### Step 5: Balance & Tuning
+
+Numbers, curves, formulas. Tables with min/max/default and the balance goal.
+
+### Step 6: GDD Output
+
+Structured document you own. Written to wherever you want it.
+
+---
+
+## Challenge Tools (Mode 2 — all optional)
+
+### Code Audit
+
+Reads your GDD and project code, compares feature sets:
+
+```
+F_gdd ∩ F_code  = Implemented + documented → verify match
+F_gdd \ F_code  = Documented but unimplemented → WIP or removed?
+F_code \ F_gdd  = Implemented but undocumented → new features to add?
+```
+
+For each match, it deep-compares: do the tuning values match? Do behaviors match the spec?
+
+**The audit surfaces deltas. You decide which is truth.** The GDD might be outdated. The code might have drifted. The skill doesn't assume either is right.
+
+### The Design Judge
+
+Full adversarial review. Hunts 20 design frauds including:
+
+- Pillar drift (feature without a pillar)
+- Loop orphan (mechanic not connected to core loop)
+- Tuning theater (prose instead of numbers)
+- GDD-code drift (doc says one thing, code does another)
+- MDA mismatch (pillars say X, mechanics produce Y)
+- Pillar-pillar denial (active tension ignored)
+
+**Verdict is delivered as a recommendation. You decide what to act on.**
+
+### Pillar Judge (deep trace)
+
+Traces one specific feature, scenario, or question through EVERY pillar, one at a time:
+
+```
+Pillar 1: <name> → Supports (intensity 4/5)
+Pillar 2: <name> → Tension (intensity 3/5) — fast movement makes fair combat harder
+Pillar 3: <name> → Neutral
+```
+
+Then states the trade-off: "This strengthens <A> at the cost of <B>. Mitigations available: <...>."
+
+**Recommendation delivered. You decide.**
+
+### MDA Analysis
+
+Applies Mechanics → Dynamics → Aesthetics to a feature or composed scenario.
+
+Predicts what the player will actually experience. Compares against the pillars. Flags gaps:
+
+"Your pillars say this game is about Discovery, but this feature's MDA profile produces Submission. The player will experience grinding, not exploring. Is that intentional?"
+
+**You decide.** Maybe the gap is acceptable. Maybe you want to retune. The skill helps you explore both paths.
+
+### Brainstorming
+
+When you say "brainstorm <topic>," the skill generates ideas and helps you evaluate each against your pillars. It does not add anything to the GDD. It suggests, you filter, you decide.
+
+---
+
+## How the skill behaves
+
+### It challenges — it does not override
+
+When the skill finds a contradiction, tension, or gap, it says:
+
+```
+⚠ TENSION DETECTED: <what the tension is>
+  → <Feature X> contradicts <Pillar Y> because <reason>
+  → Options:
+    1. Modify the feature to align with the pillar
+    2. Accept the tension (log to .design-context/tensions.md)
+    3. Reconsider the pillar (log change to .design-context/pillars.md)
+  Your call.
+```
+
+It does not proceed silently. It does not make the choice. It presents options and asks.
+
+### It learns your context — it does not assume
+
+At the start of every session, the skill loads:
+- The GDD (if it exists)
+- `.design-context/` (the evolving memory)
+- The project code (if accessible)
+
+It does not start from scratch. It knows what you decided last time and why.
+
+### It logs everything — so you can look back
+
+Every interaction that produces a decision gets logged: what was decided, why, what alternatives were considered, what tensions were accepted. This is how the skill works as a second brain — it remembers what you'd forget.
+
+### It leaves decisions to you — always
+
+The skill recommends. It challenges. It brainstorms. It surfaces tensions and trade-offs.
+
+**It never modifies your GDD without you asking. It never overrides a decision. It never proceeds as if your silence is consent.**
+
+The designer decides. Always.
+
+---
+
+## Common Pitfalls
+
+1. **Pillars too vague.** "Fun" is not a pillar. If you can't name what it forbids, it's not filtering anything.
+2. **Running all tools at once.** The challenge tools are deep. Run one at a time. Let each result inform the next.
+3. **Letting the GDD and code diverge.** Run the code audit periodically. A GDD that describes a different game than the code implements is a liability.
+4. **Not logging overrides.** Every time you accept a tension or override a recommendation, log it. Future-you will need the context. The skill prompts you to log.
+5. **Treating the GDD as a one-time document.** A GDD that isn't updated when the design changes is a historical artifact, not a design tool.
+6. **Using the skill to make decisions for you.** The skill challenges and recommends. You decide. If you find yourself accepting every recommendation without thinking, you're not designing anymore.
+7. **Designing for an undefined audience.** Every mechanic serves someone. If you don't know who, you're designing for yourself. The skill will ask.
+
+---
+
+## Verification Checklist
+
+- [ ] GDD exists or is being written — this is the primary objective
+- [ ] Pillars are defined, specific, observable, contradictable
+- [ ] `.design-context/` is initialized and has a design-log entry for the session
+- [ ] At least one challenge tool has been run (optional but recommended)
+- [ ] All tensions surfaced by the skill have been addressed or explicitly accepted
+- [ ] Designer has made all final decisions — the skill has not silently decided anything
+- [ ] Design log is current (every decision + rationale recorded)
