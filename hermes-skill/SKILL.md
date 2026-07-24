@@ -358,7 +358,7 @@ The designer decides. Always.
 ## Verification Checklist
 
 - [ ] GDD exists or is being written — this is the primary objective
-- [ ] Pillars are defined with a clear direction and something they push against
+- [ ] Pillars are defined, specific, observable, contradictable
 - [ ] `.design-context/` is initialized and has a design-log entry for the session
 - [ ] At least one challenge tool has been run (optional but recommended)
 - [ ] All tensions surfaced by the skill have been addressed or explicitly accepted
