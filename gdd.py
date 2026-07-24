@@ -20,6 +20,20 @@ import textwrap
 from pathlib import Path
 
 
+# ── Terminal-safe symbols ───────────────────────────────────────────
+
+def _emoji(utf8: str, fallback: str) -> str:
+    """Return utf8 symbol if terminal supports it, else ASCII fallback."""
+    if sys.stdout.encoding and "UTF" in sys.stdout.encoding.upper():
+        return utf8
+    return fallback
+
+
+OK = lambda: _emoji("✓", "[ok]")
+WARN = lambda: _emoji("⚠", "[!]")
+TODO = lambda: _emoji("⬜", "[ ]")
+
+
 # ── Template paths ──────────────────────────────────────────────────
 
 def _tool_dir() -> Path:
@@ -90,7 +104,7 @@ def cmd_init(args):
         if not fp.exists():
             fp.write_text(content)
             created += 1
-    print(f"✓ .design-context/ initialised at {base}")
+    print(f"{OK()} .design-context/ initialised at {base}")
     print(f"  {created} items created (existing ones preserved)")
 
 
@@ -129,10 +143,10 @@ def cmd_pillar(args):
         issues.append("Try expanding: what's the core idea, and what does it mean for the player experience?")
 
     if not issues:
-        print("✓ This pillar has a clear direction and guiding principle.")
+        print(f"{OK()} This pillar has a clear direction and guiding principle.")
         return 0
     else:
-        print("⚠ This pillar could be sharper:")
+        print(f"{WARN()} This pillar could be sharper:")
         for i, issue in enumerate(issues, 1):
             print(f"  {i}. {issue}")
         return 1
@@ -163,11 +177,11 @@ def cmd_matrix(args):
                 row += f"{'—':>{col_w}}"
             else:
                 pair = tuple(sorted([f1, f2]))
-                row += f"{'⬜':>{col_w}}"
+                row += f"{TODO():>{col_w}}"
         print(row)
 
     print()
-    print("⬜ = undocumented — analyse each pair:")
+    print(f"{TODO()} = undocumented — analyse each pair:")
     print()
 
     for a, b in pairs:
@@ -175,7 +189,7 @@ def cmd_matrix(args):
         print(f"    Simultaneous?  [YES / NO / SEQUENCE-ONLY / CONTEXT-DEPENDENT]")
         print(f"    Result:        <what actually happens when both are active>")
         print(f"    Edge cases:    <boundary conditions, timing dependencies>")
-        print(f"    Status:        ⬜ Not yet analysed")
+        print(f"    Status:        {TODO()} Not yet analysed")
         print()
 
     print(f"  Total: {len(pairs)} pairs to document.")
@@ -194,26 +208,26 @@ def cmd_status(args):
     if gdd_found:
         for p in gdd_found:
             size = len(p.read_text(encoding="utf-8", errors="replace").splitlines())
-            report.append(f"✓ GDD found: {p.name} ({size} lines)")
+            report.append(f"{OK()} GDD found: {p.name} ({size} lines)")
     else:
-        report.append("⚠ No GDD file detected (looking for *gdd*.md or *design*.md)")
+        report.append(f"{WARN()} No GDD file detected (looking for *gdd*.md or *design*.md)")
         issues += 1
 
     # .design-context/ check
     dc = cwd / ".design-context"
     if dc.exists():
         items = list(dc.rglob("*"))
-        report.append(f"✓ .design-context/ exists ({len([i for i in items if i.is_file()])} files)")
+        report.append(f"{OK()} .design-context/ exists ({len([i for i in items if i.is_file()])} files)")
         for key_file in ["design-log.md", "pillars.md", "tensions.md", "open-questions.md"]:
             kp = dc / key_file
             if kp.exists():
                 lines = len(kp.read_text(encoding="utf-8", errors="replace").splitlines())
-                report.append(f"  ✓ {key_file} ({lines} lines)")
+                report.append(f"  {OK()} {key_file} ({lines} lines)")
             else:
-                report.append(f"  ⚠ {key_file} missing")
+                report.append(f"  {WARN()} {key_file} missing")
                 issues += 1
     else:
-        report.append("⚠ No .design-context/ directory — run 'gdd.py init'")
+        report.append(f"{WARN()} No .design-context/ directory — run 'gdd.py init'")
         issues += 1
 
     # Pillars check
@@ -222,15 +236,15 @@ def cmd_status(args):
         content = pillars_file.read_text(encoding="utf-8", errors="replace")
         pillar_count = content.count("PILLAR:")
         if pillar_count == 0:
-            report.append("⚠ pillars.md exists but no pillars defined (no 'PILLAR:' lines)")
+            report.append(f"{WARN()} pillars.md exists but no pillars defined (no 'PILLAR:' lines)")
             issues += 1
         else:
-            report.append(f"✓ {pillar_count} pillar(s) defined")
+            report.append(f"{OK()} {pillar_count} pillar(s) defined")
     else:
         if not dc.exists():
             pass  # already flagged
         else:
-            report.append("⚠ No pillars defined yet")
+            report.append(f"{WARN()} No pillars defined yet")
             issues += 1
 
     print(f"Project Design Status — {cwd.name}")
@@ -240,7 +254,7 @@ def cmd_status(args):
     if issues:
         print(f"\n  {issues} issue(s) found. Run 'gdd.py init' or 'gdd.py pillar <statement>' to resolve.")
     else:
-        print(f"\n  ✓ All checks passed.")
+        print(f"\n  {OK()} All checks passed.")
     return 0
 
 
