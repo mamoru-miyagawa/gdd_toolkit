@@ -1,5 +1,5 @@
 <p align="center">
-  <span style="font-size: 5em;">📖</span>
+  <img src="docs/assets/gdd-logo.png" alt="GDD Toolkit" width="128">
 </p>
 
 <h1 align="center">GDD Toolkit</h1>
