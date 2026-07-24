@@ -45,6 +45,12 @@ Apply this adapter BEFORE Step 0 (Vision Lock). Its minimum evidence set is bind
 
 "<A typical deliverable for this genre> is done" means: <the observed checklist in one sentence>. Not: "<the genre's classic hollow claim>".
 
-## Sources
+## Supporting content
 
-One line per claim that names a specific figure, convention, or requirement: the link plus access date.
+This section holds the links, statements, and references you create or collect to support your design decisions. Not "where I found this info" — but what backs up the choices you made.
+
+- **Links** — to external articles, talks, games, or docs that informed your thinking
+- **Statements** — design assumptions you're making, written down so they can be revisited
+- **Content you created** — prototypes, notes, spreadsheets, diagrams that support the adapter
+
+Include anything someone would need to understand *why* you designed the adapter this way. If a future designer reads this and asks "why did they do that?", the answer should be here.
