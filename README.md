@@ -1,114 +1,116 @@
-# GDD Skills — Game Design Assistant
+# Game Design Assistant
 
-A disciplined game design co-pilot that helps you write a Game Design Document — then challenges it.
-
-**Not a GDD generator.** Not a "make me a game in one prompt" tool. This is a design methodology that:
-- Guides you through writing a proper GDD section by section
-- Validates every feature against your own design pillars
-- Cross-references every mechanic against every other mechanic
-- Applies MDA analysis (Mechanics → Dynamics → Aesthetics) to predict what players actually experience
-- Audits your project code against your GDD to find drift
-- Leaves every decision to you — it challenges and recommends, never overrides
-
----
-
-## Contents
-
-| File | What it is | Who uses it |
-|---|---|---|
-| `AGENTS.md` | Full methodology — no frontmatter, portable | Hermes, Claude Code, OpenCode, Codex — auto-loaded from project root |
-| `gdd.py` | Standalone Python tool with `init`, `template`, `pillar`, `matrix`, `status` — works in any agent, any OS | All — no dependencies |
-| `QUICKSTART.md` | Condensed 2-page version | Any chat LLM (ChatGPT, Claude Web, Pi, Gemini) — paste as system prompt |
-| `hermes-skill/` | Full Hermes skill with SKILL.md + references + templates | Hermes — `hermes -s game-design-assistant` |
-| `.claude-plugin/plugin.json` | Claude Code plugin manifest | Claude Code — `/plugin install gdd@game-design-assistant` |
-| `install.sh` | POSIX installer | macOS / Linux / Git Bash |
-| `install.ps1` | Windows installer | PowerShell |
+A game design co-pilot for AI coding agents. Write a GDD, then challenge it against your own pillars, cross-reference mechanics, apply MDA — without the "make me a whole game in one prompt" nonsense.
 
 ---
 
 ## Quick install
 
-### Hermes
-```bash
-hermes skills install https://raw.githubusercontent.com/YOUR_USERNAME/GDD_skills/main/hermes-skill/SKILL.md
-# or manually:
-git clone https://github.com/YOUR_USERNAME/GDD_skills
-bash GDD_skills/install.sh
-```
-Then: `/reload-skills` then `/skill game-design-assistant`
+### Claude Code (plugin — recommended)
 
-### Claude Code
-```bash
-# As a plugin (recommended):
-/plugin marketplace add YOUR_USERNAME/GDD_skills
+Inside any Claude Code session:
+
+```
+/plugin marketplace add mamoru-miyagawa/gdd-toolkit
 /plugin install gdd@game-design-assistant
-
-# Or just copy AGENTS.md to your project root:
-cp GDD_skills/AGENTS.md ./AGENTS.md
 ```
 
-### OpenCode / Codex
-Copy `AGENTS.md` to your project root — both auto-detect it.
+Then type `/gdd` or `/game-design` to load the methodology. Or just start with "I want to write a GDD."
 
-### Any chat LLM (ChatGPT, Claude Web, Pi, Gemini)
-Open `QUICKSTART.md` and paste its contents as your first message or system prompt.
+### OpenCode / Codex CLI
+
+Copy `AGENTS.md` to your project root — both auto-detect it on startup.
+
+```bash
+# from the repo
+cp AGENTS.md /path/to/your/game/project/AGENTS.md
+
+# or clone and cd in
+git clone https://github.com/mamoru-miyagawa/gdd-toolkit
+cd gdd-toolkit
+opencode
+```
+
+### Pi / ChatGPT / Claude Web / Gemini
+
+Open `QUICKSTART.md` and paste the contents as your first message or system prompt. No install needed.
+
+### Hermes
+
+```bash
+git clone https://github.com/mamoru-miyagawa/gdd-toolkit
+bash gdd_toolkit/install.sh
+```
+
+Then `/reload-skills` and `/skill game-design-assistant`.
 
 ---
 
 ## How to use
 
 ### Write a GDD
+
 ```
-/skill game-design-assistant    # (Hermes) load the skill
-Let's write a GDD for my game.  # Start with Vision Lock
+Let's write a GDD for my game.    # starts with Vision Lock
 ```
+
+The assistant walks you through each section. You define the pillars, the core loop, and the features. The GDD is your document — you own it.
 
 ### Challenge what you have
-```
-audit the code                  # Compare GDD vs project code
-run the matrix                  # Test every feature against every other
-MDA this combat system          # Analyze Mechanics → Dynamics → Aesthetics
-pillar judge this wall-running  # Deep trace through every pillar
-judge this design               # Full adversarial review
-brainstorm monetization ideas   # Generate + evaluate against pillars
+
+Once you have a GDD (or a draft), test it:
+
+| Say this | It does |
+|---|---|
+| `pillar gate wall-running` | Check one feature against your pillars, core loop, systems, scope |
+| `run the matrix` | Test every feature against every other — pairwise |
+| `MDA this combat system` | Mechanics → Dynamics → Aesthetics analysis |
+| `balance this weapon set` | Capture intent and relationships between values |
+| `audit the code` | Compare GDD features against what's implemented |
+| `judge this design` | Full adversarial review: pillars, scope, pairs, tuning |
+| `pillar judge this stealth mechanic` | Deep trace through every pillar |
+| `brainstorm enemy types` | Generate ideas, evaluate against pillars |
+
+You always decide. The assistant challenges, recommends, and logs to `.design-context/` — but never changes your GDD without you saying so.
+
+### Use the CLI directly
+
+```bash
+python gdd.py init                          # create .design-context/
+python gdd.py template GDD-skeleton         # print a template
+python gdd.py pillar "Players explore by experimenting, not reading"  # evaluate a pillar
+python gdd.py matrix Jump,Run,Attack,Shoot  # generate pairwise pairs
+python gdd.py status                        # scan project health
 ```
 
-### Set up the second brain
-The skill auto-creates `.design-context/` in your project folder. This is where decisions, rationale, tensions, and open questions live — separate from the formal GDD.
+Works anywhere Python 3 is installed. No dependencies.
 
 ---
 
-## Templates
+## What's in the repo
 
-The `hermes-skill/references/templates/` folder contains:
-- **GDD-skeleton.md** — full 11-section GDD template
-- **system-design.md** — per-system documentation template
-- **core-loop-canvas.md** — one-page core loop worksheet
-- **balance-table.md** — tuning tables with curves and goals
-- **mda-reference.md** — MDA framework quick reference
-- **project-context.md** — `.design-context/` initialization guide
+| File | What it is |
+|---|---|
+| `AGENTS.md` | Portable methodology — auto-loaded by Claude Code, OpenCode, Codex |
+| `.claude-plugin/plugin.json` | Claude Code plugin manifest |
+| `QUICKSTART.md` | Condensed version — paste into any chat LLM |
+| `gdd.py` | CLI tool — `init`, `template`, `pillar`, `matrix`, `status` |
+| `hermes-skill/` | Full Hermes skill with SKILL.md + references + templates |
+| `install.sh` / `install.ps1` | Installers for Hermes |
 
-The `hermes-skill/templates/` folder contains:
-- **obsidian-vault-layout.md** — recommended Obsidian vault structure
+Templates live in `hermes-skill/references/templates/`:
+- GDD skeleton, system design, core loop canvas, balance table, MDA reference, project context init
 
 ---
 
-## Design philosophy
+## The second brain (`.design-context/`)
 
-This tool exists because most AI game design content is cargo-cult garbage — "make me a whole game in one prompt" treating game development as a vibe, not a discipline.
+The assistant maintains a sidecar folder alongside your project — separate from the formal GDD. This is where decisions, rationale, tensions, rejected ideas, and open questions live. The GDD is the deliverable. `.design-context/` is the memory.
 
-**This skill does the opposite:**
-- It demands pillars before features
-- It cross-references every mechanic against every other
-- It applies the MDA framework to predict what players actually experience
-- It audits your code against your GDD to catch drift
-- It challenges you when something doesn't add up
-- It never makes a decision for you
-
-The most important line in every pillar definition is **"what it pushes against."** A pillar that can't be challenged filters nothing.
+Run `python gdd.py init` to create it, or the assistant sets it up automatically in Hermes.
 
 ---
 
 ## License
 
-MIT — do whatever you want with it. Credit appreciated but not required.
+MIT
