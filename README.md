@@ -1,6 +1,8 @@
 <p align="center">
-  <strong><span style="font-size: 3em;">📖</span></strong>
+  <span style="font-size: 5em;">📖</span>
 </p>
+
+<h1 align="center">GDD Toolkit</h1>
 
 <p align="center">
   <strong>a game design document, written through conversation</strong>
@@ -55,7 +57,7 @@ This tool is thorough on purpose. You will have to think.
 ### Claude Code (plugin)
 ```
 /plugin marketplace add mamoru-miyagawa/gdd-toolkit
-/plugin install gdd@game-design-assistant
+/plugin install gdd@gdd-toolkit
 ```
 
 ### OpenCode / Codex
@@ -66,7 +68,7 @@ Copy `AGENTS.md` to your project root. Auto-detected on startup.
 git clone https://github.com/mamoru-miyagawa/gdd_toolkit
 bash gdd_toolkit/install.sh
 ```
-Then `/reload-skills` and `/skill game-design-assistant`.
+Then `/reload-skills` and `/skill gdd-toolkit`.
 
 ### Any chat LLM
 Open `QUICKSTART.md` and paste the contents as your first message.

@@ -18,8 +18,8 @@ install_hermes() {
         return 1
     fi
     mkdir -p "$dst"
-    cp -r "$src/hermes-skill" "$dst/game-design-assistant"
-    echo "  ✓ Hermes: $dst/game-design-assistant"
+    cp -r "$src/hermes-skill" "$dst/gdd-toolkit"
+    echo "  ✓ Hermes: $dst/gdd-toolkit"
 }
 
 install_claude() {
@@ -31,8 +31,8 @@ install_claude() {
     mkdir -p "$dst"
     # Claude Code uses AGENTS.md from project root, but we can also
     # install as a skill via the plugin system
-    cp "$src/AGENTS.md" "$dst/game-design-assistant.md"
-    echo "  ✓ Claude Code: $dst/game-design-assistant.md"
+    cp "$src/AGENTS.md" "$dst/gdd-toolkit.md"
+    echo "  ✓ Claude Code: $dst/gdd-toolkit.md"
     echo "  ℹ  Claude Code can also use AGENTS.md from the project root"
 }
 
@@ -48,7 +48,7 @@ install_opencode
 
 echo ""
 echo "━━━ Done ━━━"
-echo "Hermes:   /skill game-design-assistant"
+echo "Hermes:   /skill gdd-toolkit"
 echo "Claude:   copy AGENTS.md to your project root"
 echo "OpenCode: copy AGENTS.md to your project root"
 echo "Any LLM:  paste QUICKSTART.md as system prompt"

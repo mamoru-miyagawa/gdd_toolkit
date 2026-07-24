@@ -1,5 +1,5 @@
 ---
-name: game-design-assistant
+name: gdd-toolkit
 description: Helps you write a GDD — then challenges it. Reads your code, knows your pillars, cross-references every mechanic against every other, and applies MDA analysis. Always leaves decisions to you.
 version: 2.2.0
 author: Mamoru Miyagawa
@@ -10,7 +10,7 @@ metadata:
     related_skills: [fable-method, fable-judge, writing-plans]
 ---
 
-# Game Design Assistant
+# GDD Toolkit
 
 **The primary goal is helping you write a Game Design Document.** Everything below is a tool you can choose to run against what you already have.
 

@@ -263,7 +263,7 @@ def cmd_status(args):
 def main():
     parser = argparse.ArgumentParser(
         prog="gdd.py",
-        description="Game Design Assistant — write GDDs, validate pillars, run pairwise matrices.",
+        description="GDD Toolkit — write GDDs, validate pillars, run pairwise matrices.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=textwrap.dedent("""\
             Examples:

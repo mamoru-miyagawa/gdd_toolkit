@@ -1,4 +1,4 @@
-# Game Design Assistant
+# GDD Toolkit
 
 **The primary goal is helping you write a Game Design Document.** Everything below is a tool you can choose to run against what you already have.
 

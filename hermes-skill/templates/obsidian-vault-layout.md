@@ -1,6 +1,6 @@
 # Obsidian Vault Layout for Game Design
 
-Recommended folder structure for storing a GDD in Obsidian, optimized for bidirectional linking, Mermaid flowcharts, and the game-design-assistant workflow.
+Recommended folder structure for storing a GDD in Obsidian, optimized for bidirectional linking, Mermaid flowcharts, and the GDD Toolkit workflow.
 
 ---
 

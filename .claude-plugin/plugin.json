@@ -1,15 +1,15 @@
 {
-  "id": "game-design-assistant",
-  "name": "Game Design Assistant",
+  "id": "gdd-toolkit",
+  "name": "GDD Toolkit",
   "version": "2.2.0",
   "description": "A disciplined game design co-pilot. Helps write GDDs, validates features against pillars, cross-references mechanics, applies MDA analysis, and audits code-vs-GDD alignment.",
   "author": "Mamoru Miyagawa",
   "license": "MIT",
   "skills": {
-    "game-design-assistant": {
+    "gdd-toolkit": {
       "file": "../AGENTS.md",
       "trigger": ["/gdd", "/game-design"],
-      "description": "Load the game design methodology: pillars, pairwise matrix, MDA analysis, code audit, design judge",
+      "description": "Load the GDD Toolkit methodology: pillars, pairwise matrix, MDA analysis, code audit, design judge",
       "tags": ["game-design", "gdd", "mda-framework", "pairwise-analysis"]
     }
   },
