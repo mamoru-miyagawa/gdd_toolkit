@@ -52,6 +52,29 @@ This tool is thorough on purpose. You will have to think.
 
 ---
 
+## Running it against an existing project
+
+If you already have code or documentation, you can run the toolkit from your project folder. The AI will look at what exists — source files, configs, existing docs — and start a conversation about what to keep, change, or document.
+
+How well this works depends on the AI agent and your project:
+
+- **Works well:** small to medium projects with clear file names (classes, components, systems). The AI reads your structure and asks about what it finds.
+- **Works okay:** larger projects with obvious entry points. The AI will scan what it can reach and focus on areas it can understand.
+- **Hit or miss:** projects with unusual structures, generated code, or game-specific asset files. The AI may misinterpret or miss things — you'll need to guide it.
+
+**What the toolkit actually does** (no promises it doesn't keep):
+
+| Claim | Reality |
+|---|---|
+| "It reads your code" | The AI reads files it can access. It's a conversation — it tells you what it found and asks if it's right. |
+| "It extracts features" | It guesses based on file names, class names, and structure. It will miss things and misinterpret others. You correct it. |
+| "It audits code vs GDD" | It compares what it sees in code against what's in your GDD and flags differences. Works best on small projects. |
+| "It's aware of changes" | It logs decisions to `.design-context/` every session. If it can read the code changes, it will notice. |
+
+The honest truth: this is an AI having a thorough conversation about your project, not an automated scanner. It works because the AI asks questions and you answer — not because it perfectly understands your codebase. For a small PICO-8 cart or a focused prototype, it's great. For a large Unreal project, it will need your guidance.
+
+---
+
 ## Quick install
 
 ### Claude Code (plugin)
