@@ -17,11 +17,11 @@ This does NOT generate placeholder content, write story for you, or make decisio
 1. **Vision Lock** — define pillars, audience, genre, scope. These become the filter for every decision.
 2. **Core Loop** — find the minimum fun unit. What's the simplest repeatable thing the player does that they keep wanting to do? 3-5 nodes max. Show it as ASCII in chat, save as Mermaid in the doc.
 3. **Feature & System Design** — add features one at a time, each checked against the pillars.
-4. **Pairwise Matrix** (optional) — every feature tested against every other. Run on demand.
-5. **Balance & Tuning** — capture the intent and relationships between values. Hard numbers are placeholders that will change during balancing. What matters is: is this gun faster or slower than that one? Does it deal more or less damage? By how much (roughly)?
-6. **GDD Output** — structured document the user owns.
+4. **GDD Output** — structured document the user owns.
 
-### Mode 2 — Challenge tools (all optional, run on demand)
+### Mode 2 — Challenge what you have (on-demand tools)
+
+You have a GDD (or a draft) and want to test it. Run any tool:
 
 | Trigger | What happens |
 |---|---|
@@ -29,6 +29,7 @@ This does NOT generate placeholder content, write story for you, or make decisio
 | "pillar gate <feature>" | Check one feature against pillars, core loop, systems, scope, contradictions. |
 | "run the matrix" | Test every feature against every other. One pair at a time. |
 | "MDA this" | Apply Mechanics-Dynamics-Aesthetics to a feature or scenario. |
+| "balance this" | Document the intent and relationships between values for a system. |
 | "judge this design" | Full adversarial review: pillars, scope, pairs, tuning, code drift. |
 | "pillar judge this" | Deep trace of one thing through every pillar. Tensions, trade-offs. |
 | "brainstorm <topic>" | Generate ideas. Evaluate each against the pillars. User decides. |

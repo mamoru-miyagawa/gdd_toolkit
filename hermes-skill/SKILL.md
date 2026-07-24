@@ -31,25 +31,24 @@ You say "let's write the GDD" or start a new project. The skill guides you throu
 1. **Vision Lock** — define pillars, audience, genre, scope. These become the filter for every decision.
 2. **Core Loop** — find the minimum fun unit. What's the simplest repeatable thing the player does that they keep wanting to do? 3-5 nodes max. Show it as ASCII in chat, save as Mermaid in the doc.
 3. **Feature & System Design** — add features one at a time. Each goes through the Pillar Gate.
-4. **Pairwise Matrix** — every feature tested against every other. You choose when to run it.
-5. **Balance & Tuning** — capture the intent and relationships between values. Hard numbers are placeholders that will change during balancing. What matters is: is this gun faster or slower than that one? Does it deal more or less damage? By how much (roughly)?
-6. **Documentation** — structured GDD output you own.
+4. **GDD Output** — structured document you own.
 
 At any point you can say "I want to add a feature" and the skill will help you write it, then surface what it might conflict with — and ask you what you want to do.
 
 ### Mode 2 — Challenge what you have (on-demand tools)
 
-You have a GDD (or a draft, or code) and want to test it. Run any tool:
+You have a GDD (or a draft) and want to test it. Run any tool:
 
 | Say this | And the skill will |
 |---|---|
 | "audit the code" | Read your GDD, scan your project, compare feature sets. Surface deltas. |
 | "pillar gate this feature" | Check one feature against your pillars, core loop, systems, scope, contradictions. |
 | "run the matrix" | Test every feature against every other. One pair at a time. |
-| "MDA this" | Apply Mechanics-Dynamics-Aesthetics to a feature or scenario. Predict what the player actually experiences. |
+| "MDA this" | Apply Mechanics-Dynamics-Aesthetics to a feature or scenario. |
+| "balance this" | Document the intent and relationships between values for a system. |
 | "judge this design" | Full adversarial review: pillars, scope, pairs, tuning, code drift. |
-| "pillar judge this" | Deep trace of one thing through every pillar. Tensions, trade-offs, recommendation. |
-| "brainstorm <topic>" | Generate ideas. Then help you evaluate each against your pillars. You decide what stays. |
+| "pillar judge this" | Deep trace of one thing through every pillar. Tensions, trade-offs. |
+| "brainstorm <topic>" | Generate ideas. Evaluate each against your pillars. You decide what stays. |
 
 **The skill never modifies your GDD without you asking.** It reads, analyzes, challenges, and writes to `.design-context/` — your GDD only changes when you say so.
 
