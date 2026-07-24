@@ -15,9 +15,9 @@ This does NOT generate placeholder content, write story for you, or make decisio
 ### Mode 1 — Write the GDD (the primary path)
 
 1. **Vision Lock** — define pillars, audience, genre, scope. These become the filter for every decision.
-2. **Core Loop** — find the minimum fun unit. What's the simplest repeatable thing the player does that they keep wanting to do? 3-5 nodes max. Show it as ASCII in chat, save as Mermaid in the doc.
-3. **Feature & System Design** — add features one at a time, each checked against the pillars.
-4. **GDD Output** — structured document the user owns.
+2. **Core Loop** — find the minimum fun unit. What's the simplest repeatable thing the player does that they keep wanting to do? Keep it tight — you define the length. Show it as ASCII in chat, save as Mermaid in the doc.
+3. **Feature & System Design** — add features one at a time, each checked against the pillars. Each system gets its own file under `.design-context/systems/NN-name.md`.
+4. **GDD Output** — wherever you decide: a single `GDD.md`, a `/gdd/` folder, or whatever works. The GDD is a wiki — summaries with links to deeper docs, grouped by system or subject.
 
 ### Mode 2 — Challenge what you have (on-demand tools)
 
@@ -46,12 +46,14 @@ The assistant maintains a sidecar folder — the second brain — alongside the 
 ├── design-log.md           # Chronological log of every decision + rationale
 ├── pillars.md              # Current pillars + evolution history
 ├── rejected-ideas.md       # What was considered and why it was cut
-├── open-questions.md       # Questions not yet resolved
+├── open-questions.md       # Questions not yet resolved (resolved ones go to bottom, not deleted)
+├── code-change-queue.md    # Design decisions made, awaiting implementation
 ├── tensions.md             # Known tensions between pillars, features, systems
 ├── mda-analyses/           # MDA analysis results
 ├── code-audits/            # GDD-vs-code comparison snapshots
 ├── design-reviews/         # Design Judge verdicts
-└── brainstorming/          # Raw notes, half-formed ideas
+├── brainstorming/          # Raw notes, half-formed ideas
+└── systems/                # One file per feature/system, written during Step 3
 ```
 
 ---
@@ -117,6 +119,11 @@ Which systems does it touch?          → Movement, Combat, Camera, Level Design
 What's the scope cost?                → New animation set, navmesh updates, camera collision checks.
 Does it contradict anything?          → No existing feature conflicts.
 ```
+
+The verdict goes into the system file:
+- **PASS** — serves pillars, connects, scope justified
+- **PASS with N flags** — each flag is `RESOLVED <date>`, `DEFERRED`, or `open` (spawns an OQ)
+- **BLOCK** — contradiction unresolved, designer decides
 
 **Always start with the summary.** The user needs to know what they're evaluating before they evaluate it.
 

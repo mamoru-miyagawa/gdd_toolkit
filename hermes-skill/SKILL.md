@@ -29,9 +29,9 @@ This skill does NOT generate placeholder content, write story for you, or make d
 You say "let's write the GDD" or start a new project. The skill guides you through:
 
 1. **Vision Lock** — define pillars, audience, genre, scope. These become the filter for every decision.
-2. **Core Loop** — find the minimum fun unit. What's the simplest repeatable thing the player does that they keep wanting to do? 3-5 nodes max. Show it as ASCII in chat, save as Mermaid in the doc.
-3. **Feature & System Design** — add features one at a time. Each goes through the Pillar Gate.
-4. **GDD Output** — structured document you own.
+2. **Core Loop** — find the minimum fun unit. What's the simplest repeatable thing the player does that they keep wanting to do? Keep it tight — you define the length. Show it as ASCII in chat, save as Mermaid in the doc.
+3. **Feature & System Design** — add features one at a time. Each goes through the Pillar Gate. Each system gets its own file under `.design-context/systems/NN-name.md`. The GDD will link to these — it's a wiki, not a monolith.
+4. **GDD Output** — written to wherever you decide: a single `GDD.md` at the project root, a `/gdd/` folder with section files, or wherever works for you. The GDD is a wiki — summaries with links to deeper docs, grouped by system or by subject (combat, loot, inputs / characters, level, feedback) — however it makes sense for you.
 
 At any point you can say "I want to add a feature" and the skill will help you write it, then surface what it might conflict with — and ask you what you want to do.
 
@@ -54,6 +54,22 @@ You have a GDD (or a draft) and want to test it. Run any tool:
 
 ---
 
+## CLI Tool: `gdd.py`
+
+The repo includes a standalone Python tool (`gdd.py`) that works on any agent, any OS — no dependencies.
+
+| Command | What it does |
+|---|---|
+| `python gdd.py init` | Create `.design-context/` in current directory |
+| `python gdd.py template GDD-skeleton` | Print a template (also: system-design, core-loop-canvas, balance-table, mda-reference, project-context) |
+| `python gdd.py pillar "Players explore by experimenting"` | Evaluate a pillar for clarity and direction |
+| `python gdd.py matrix Jump,Run,Attack` | Generate a pairwise matrix from comma-separated features |
+| `python gdd.py status` | Scan for GDD + `.design-context/` health |
+
+The agent runs these when you ask; you can run them directly.
+
+---
+
 ## The Project Context File (`.design-context/`)
 
 The skill maintains a separate folder — the second brain — alongside your project. This is where it stores:
@@ -62,11 +78,13 @@ The skill maintains a separate folder — the second brain — alongside your pr
 - **Pillar evolution** — how pillars changed over time and why
 - **Tensions** — known conflicts between pillars, features, systems
 - **Rejected ideas** — what was considered and why it was cut
-- **Open questions** — things not yet resolved
+- **Open questions** — things not yet resolved. When resolved, move to a "Resolved" section in the same file (don't delete — the history matters). Resolutions frequently spawn new questions — the chain is the audit trail.
+- **Code change queue** — design decisions already made, awaiting code implementation. Each item: source (which system + flag), decision, what to change, priority.
 - **MDA analyses** — analysis results
 - **Code audits** — GDD-vs-code comparison snapshots
 - **Design reviews** — Design Judge verdicts
 - **Brainstorming** — raw notes and half-formed ideas
+- **Systems/** — one file per feature/system, written during Step 3
 
 **The GDD is the formal deliverable. `.design-context/` is the skill's memory.** They are separate. The skill reads `.design-context/` at session start and writes to it after every interaction. You can read it too — it's plain markdown.
 
@@ -153,6 +171,8 @@ The 5-15 second cycle the player repeats. Mermaid flowchart + annotated phases.
 
 Add features one at a time. **Always start with a plain-language summary of the feature** so the designer knows what they're evaluating. Then run the Pillar Gate questions:
 
+Each system gets its own file at `.design-context/systems/NN-name.md` (zero-padded index, kebab-case name). The GDD condenses these into a section with summaries and links — it's a wiki, not a monolith.
+
 ```
 FEATURE: Wall-running
 SUMMARY: The player can sprint along walls for a short distance, opening new paths and combat angles.
@@ -165,6 +185,16 @@ Does it contradict anything?          → <the skill checks>
 ```
 
 **Never jump straight into checks.** The summary is mandatory — without it the designer doesn't have context for the discussion.
+
+The Pillar Gate produces a verdict recorded in the system file:
+- **PASS** — serves pillars, connects to loop, touches systems, scope justified, no contradictions.
+- **PASS with N flags** — passes but with tracked issues. Each flag is one of:
+  - `RESOLVED <date>` — designer made a call, rationale logged
+  - `DEFERRED` — postponed with reason
+  - `open` — raised as an Open Question (OQ)
+- **BLOCK** — contradiction unresolved, cannot proceed until designer decides.
+
+Resolved flags often spawn code change queue items or new open questions. Both are tracked.
 
 If the skill spots a tension, it surfaces it: "This feature supports <Pillar A> but creates tension with <Pillar B> because <reason>. How do you want to handle this?"
 
