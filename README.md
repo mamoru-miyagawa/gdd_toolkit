@@ -82,9 +82,7 @@ The honest truth: this is an AI having a thorough conversation about your projec
 /plugin marketplace add mamoru-miyagawa/gdd-toolkit
 /plugin install gdd@gdd-toolkit
 ```
-
-### OpenCode / Codex
-Copy `AGENTS.md` to your project root. Auto-detected on startup.
+The plugin manifest is at `.claude-plugin/plugin.json`.
 
 ### Hermes
 ```bash
@@ -92,6 +90,10 @@ git clone https://github.com/mamoru-miyagawa/gdd_toolkit
 bash gdd_toolkit/install.sh
 ```
 Then `/reload-skills` and `/skill gdd-toolkit`.
+The full Hermes skill is at `hermes-skill/SKILL.md` with references and templates.
+
+### OpenCode / Codex
+Copy `AGENTS.md` to your project root. Auto-detected on startup.
 
 ### Any chat LLM
 Open `QUICKSTART.md` and paste the contents as your first message.

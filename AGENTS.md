@@ -40,7 +40,7 @@ Done when every proposed feature has a system file with a verdict.
 | "pillar judge this" | Deep trace of one thing through every pillar. Traces support, tension, and trade-offs. |
 | "brainstorm <topic>" | Generate ideas. Evaluate each against the pillars. User decides. |
 
-The skill never modifies the GDD without asking.
+The skill never modifies the GDD without asking. Reference material is at `references/failure-modes.md` (design frauds) and `references/flowcharts.md` (methodology as charts).
 
 ---
 

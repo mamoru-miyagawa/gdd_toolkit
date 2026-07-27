@@ -68,6 +68,8 @@ Once you have a GDD, run any tool to test it:
 
 The skill never modifies your GDD without you asking. It reads, analyzes, challenges, and writes to `.design-context/`. The GDD changes only when you say so.
 
+Reference material is available in the skill folder: `references/failure-modes.md` lists 20 design frauds the Design Judge hunts, `references/flowcharts.md` has the full methodology as executable mermaid charts, and `references/domains/TEMPLATE.md` is the schema for genre-specific adapters. Templates are listed under `python gdd.py template`.
+
 ---
 
 ## CLI Tool: `gdd.py`
