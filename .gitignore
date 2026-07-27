@@ -20,3 +20,6 @@ __pycache__/
 
 # Project-specific — these get created at runtime in user projects
 .design-context/
+
+# Portfolio page — local copy only, not part of the repo
+docs/portfolio-page.md
