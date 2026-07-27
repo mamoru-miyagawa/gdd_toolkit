@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  A plugin/skill for AI agents that helps you write a GDD. It asks questions, challenges your ideas, and remembers your reasoning — but never makes decisions for you. Works with Claude Code, OpenCode, Hermes, and any chat LLM.
+  <strong>A game design skill for AI agents.</strong> Write a GDD through conversation. Challenge features against your pillars. Run pairwise matrix, MDA, code audit. Also installable as a Claude Code plugin.
 </p>
 
 <p align="center">
