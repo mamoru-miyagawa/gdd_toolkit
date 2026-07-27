@@ -90,7 +90,7 @@ git clone https://github.com/mamoru-miyagawa/gdd_toolkit
 bash gdd_toolkit/install.sh
 ```
 Then `/reload-skills` and `/skill gdd-toolkit`.
-The full Hermes skill is at `hermes-skill/SKILL.md` with references and templates.
+The full Hermes skill is at `gdd-toolkit/SKILL.md` with references and templates.
 
 ### OpenCode / Codex
 Copy `AGENTS.md` to your project root. Auto-detected on startup.

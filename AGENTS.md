@@ -71,7 +71,7 @@ Pillars are the **conceptual and contextual rules** that guide every design deci
 
 **Central rule:** every design decision traces to at least one pillar. If it doesn't, it's either an unstated pillar, scope creep, or decoration. The assistant surfaces this. The user decides.
 
-Examples and full anatomy are in the repo at `hermes-skill/references/pillars-reference.md`.
+Examples and full anatomy are in the repo at `references/pillars-reference.md`.
 
 ---
 

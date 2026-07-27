@@ -9,7 +9,7 @@ Write-Host ""
 $hermesSkills = Join-Path $HOME "AppData\Local\hermes\skills\software-development"
 if (Test-Path (Join-Path $HOME "AppData\Local\hermes\skills")) {
     New-Item -ItemType Directory -Force -Path $hermesSkills | Out-Null
-    Copy-Item (Join-Path $src "hermes-skill") (Join-Path $hermesSkills "gdd-toolkit") -Recurse -Force
+    Copy-Item (Join-Path $src "gdd-toolkit") (Join-Path $hermesSkills "gdd-toolkit") -Recurse -Force
     Write-Host "  ✓ Hermes: $hermesSkills\gdd-toolkit" -ForegroundColor Green
 } else {
     Write-Host "  ⚠ Hermes not found (no skills directory)" -ForegroundColor Yellow

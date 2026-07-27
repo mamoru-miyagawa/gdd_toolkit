@@ -4,6 +4,7 @@ description: Helps you write a GDD and challenges it against your pillars. Reads
 version: 2.3.0
 author: Mamoru Miyagawa
 license: MIT
+compatibility: Works with Hermes, Claude Code, OpenCode, Codex CLI, and any chat LLM
 metadata:
   hermes:
     tags: [game-design, gdd, mda-framework, code-analysis, design-pillars, pairwise-analysis, second-brain]

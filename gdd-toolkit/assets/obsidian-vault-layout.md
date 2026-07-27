@@ -2,6 +2,8 @@
 
 Recommended folder structure for storing a GDD in Obsidian, optimized for bidirectional linking, Mermaid flowcharts, and the GDD Toolkit workflow.
 
+> This file lives at `gdd-toolkit/assets/obsidian-vault-layout.md` in the repo.
+
 ---
 
 ## Top-Level Structure

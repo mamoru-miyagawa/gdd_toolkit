@@ -41,7 +41,7 @@ def _tool_dir() -> Path:
 
 
 def _template_path(name: str) -> Path:
-    tpl = _tool_dir() / "hermes-skill" / "references" / "templates"
+    tpl = _tool_dir() / "gdd-toolkit" / "references" / "templates"
     candidates = [
         tpl / f"{name}.md",
         tpl / f"{name}.txt",

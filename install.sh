@@ -18,7 +18,7 @@ install_hermes() {
         return 1
     fi
     mkdir -p "$dst"
-    cp -r "$src/hermes-skill" "$dst/gdd-toolkit"
+    cp -r "$src/gdd-toolkit" "$dst/gdd-toolkit"
     echo "  ✓ Hermes: $dst/gdd-toolkit"
 }
 
