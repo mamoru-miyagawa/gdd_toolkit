@@ -2,163 +2,107 @@
 
 **The primary goal is helping you write a Game Design Document.** Everything below is a tool you can choose to run against what you already have.
 
-This does NOT generate placeholder content, write story for you, or make decisions. It:
-- **Writes** — helps structure and populate a GDD section by section
-- **Reads** — loads existing GDD, project code, and context files to understand where things stand
-- **Challenges** — when asked, checks the design against its own pillars, cross-references mechanics, applies MDA, and audits code-vs-GDD alignment
-- **Leaves decisions to the user** — it recommends, flags tensions, and surfaces contradictions. The user decides. Every override is logged.
+This does NOT generate placeholder content, write story for you, or make decisions. It writes, reads, challenges, and leaves decisions to the user.
 
 ---
 
 ## Two modes
 
-### Mode 1 — Write the GDD (the primary path)
+### Mode 1 — Write the GDD
 
-1. **Vision Lock** — define pillars, audience, genre, scope. These become the filter for every decision.
-2. **Core Loop** — find the minimum fun unit. What's the simplest repeatable thing the player does that they keep wanting to do? Keep it tight — you define the length. Show it as ASCII in chat, save as Mermaid in the doc.
-3. **Feature & System Design** — add features one at a time, each checked against the pillars. Each system gets its own file under `.design-context/systems/NN-name.md`.
-4. **GDD Output** — wherever you decide: a single `GDD.md`, a `/gdd/` folder, or whatever works. The GDD is a wiki — summaries with links to deeper docs, grouped by system or subject.
+**1. Vision Lock** — define pillars, audience, genre, scope.
+Done when pillars are defined, scope budget is set, and the user confirms.
 
-### Mode 2 — Challenge what you have (on-demand tools)
+**2. Core Loop** — find the minimum fun unit. What's the simplest repeatable thing the player does that they keep wanting to do? Keep it tight — the user defines the length. Show as ASCII in chat, save as Mermaid in the doc.
+Done when an ASCII loop is drawn, user approves, Mermaid saved.
 
-You have a GDD (or a draft) and want to test it. Run any tool:
+**3. Feature & System Design** — add features one at a time, each checked against the pillars. Each system gets its own file under `.design-context/systems/NN-name.md`. Always start with a plain-language summary.
+
+The Pillar Gate produces a verdict:
+- **PASS** — serves pillars, connects to loop, scope justified, no contradictions.
+- **PASS with N flags** — each flag is `RESOLVED <date>`, `DEFERRED`, or `open` (spawns an OQ).
+- **BLOCK** — contradiction unresolved, cannot proceed until the user decides.
+
+Done when every proposed feature has a system file with a verdict.
+
+**4. GDD Output** — wherever the user decides: `GDD.md`, `/gdd/` folder, or whatever works. The GDD is a wiki — summaries with links to deeper docs, grouped by system or subject.
+
+### Mode 2 — Challenge tools (on demand)
 
 | Trigger | What happens |
 |---|---|
-| "audit the code" | Read GDD + scan project code. Compare feature sets. Surface deltas. |
+| "audit the code" | Read GDD + scan project code. Compare feature sets. Surface deltas. User decides which is truth. |
 | "pillar gate <feature>" | Check one feature against pillars, core loop, systems, scope, contradictions. |
 | "run the matrix" | Test every feature against every other. One pair at a time. |
-| "MDA this" | Apply Mechanics-Dynamics-Aesthetics to a feature or scenario. |
-| "balance this" | Document the intent and relationships between values for a system. |
-| "judge this design" | Full adversarial review: pillars, scope, pairs, tuning, code drift. |
-| "pillar judge this" | Deep trace of one thing through every pillar. Tensions, trade-offs. |
+| "MDA this" | Apply Mechanics-Dynamics-Aesthetics to a feature or scenario. Flags mismatches between pillars and predicted player experience. |
+| "balance this" | Document the intent and relationships between values for a system. Hard numbers are placeholders. |
+| "judge this design" | Full adversarial review: pillars, scope, pairs, tuning, code drift. Verdict is a recommendation. User decides. |
+| "pillar judge this" | Deep trace of one thing through every pillar. Traces support, tension, and trade-offs. |
 | "brainstorm <topic>" | Generate ideas. Evaluate each against the pillars. User decides. |
+
+The skill never modifies the GDD without asking.
 
 ---
 
-## The Project Context File (`.design-context/`)
+## The second brain (`.design-context/`)
 
-The assistant maintains a sidecar folder — the second brain — alongside the project. This is where it stores decisions, rationale, tensions, rejected ideas, and open questions. The GDD is the formal deliverable; `.design-context/` is the memory.
+A sidecar folder alongside the project — the GDD is the deliverable, `.design-context/` is the memory. Stores decisions, rationale, tensions, rejected ideas, open questions.
 
 ```
 .design-context/
-├── index.md               # Project overview, current status
-├── design-log.md           # Chronological log of every decision + rationale
-├── pillars.md              # Current pillars + evolution history
+├── design-log.md           # Every decision + rationale
+├── pillars.md              # Pillars + evolution history
+├── tensions.md             # Known conflicts
+├── open-questions.md       # Unresolved questions (resolved goes to bottom)
+├── code-change-queue.md    # Decisions awaiting implementation
 ├── rejected-ideas.md       # What was considered and why it was cut
-├── open-questions.md       # Questions not yet resolved (resolved ones go to bottom, not deleted)
-├── code-change-queue.md    # Design decisions made, awaiting implementation
-├── tensions.md             # Known tensions between pillars, features, systems
-├── mda-analyses/           # MDA analysis results
-├── code-audits/            # GDD-vs-code comparison snapshots
+├── mda-analyses/           # MDA results
+├── code-audits/            # GDD-vs-code comparisons
 ├── design-reviews/         # Design Judge verdicts
-├── brainstorming/          # Raw notes, half-formed ideas
-└── systems/                # One file per feature/system, written during Step 3
+├── brainstorming/          # Raw notes
+└── systems/                # One file per feature/system
 ```
 
 ---
 
 ## Design Pillars
 
-Pillars are the **conceptual and contextual rules** that guide every design decision. They are not rigid checklists — they're principles that tell you whether a feature *belongs* in this game.
+Pillars are the **conceptual and contextual rules** that guide every design decision. They capture what the game is about and what it pushes against.
 
-A good pillar captures the game's identity in a way that helps you answer "does this belong here?" when you're unsure. It should have a clear direction — it pushes toward some things and pushes against others — but it doesn't need to be a testable hypothesis.
+**Central rule:** every design decision traces to at least one pillar. If it doesn't, it's either an unstated pillar, scope creep, or decoration. The assistant surfaces this. The user decides.
 
-### Examples
-
-```
-PILLAR: Emergent Chaos
-  Principle: The game creates interesting situations through system interactions, not scripted events.
-  Guides decisions: Features that enable player-driven stories (physics, AI factions, dynamic economies) get priority.
-  Pushes against: Scripted set-pieces, linear progression, dialogue trees.
-
-PILLAR: Learn by Doing
-  Principle: The player figures out mechanics through experimentation, not reading.
-  Guides decisions: Tutorials are environmental, systems are intuitive, failure is informative.
-  Pushes against: Text pop-ups, ability gating, modal tutorial levels.
-```
-
-### What to define per pillar
-
-- **Principle** — the core idea, one sentence. What is this game about?
-- **How it guides decisions** — how you'd use this pillar when evaluating a feature. Not a rule, a lens.
-- **What it pushes against** — the kinds of features this pillar would resist. This is the most important part: a pillar that never conflicts with anything filters nothing.
-
-Pillars can evolve — refined, split, merged. Log changes to `.design-context/pillars.md` with the rationale.
+Examples and full anatomy are in the repo at `hermes-skill/references/pillars-reference.md`.
 
 ---
 
 ## How to communicate
 
-Use simple, plain language. No code snippets, no numbers, no technical jargon — unless the conversation specifically calls for it.
-
-**When discussing a feature, system, or mechanic:**
-1. **Summarize it first** — one or two sentences explaining what it is, in plain language, so the designer knows what you're talking about.
-   - Good: "Wall-running lets the player sprint along vertical surfaces for a short distance."
-   - Bad: "WallRunStateMachine activates on surface normal check with velocity threshold ≥ 5m/s."
-2. **Then discuss it** — ask questions, run checks, surface tensions.
-3. **Then let the designer decide.**
-
-**Avoid:** code blocks, formulas, state machine diagrams, technical specs, engine terminology, or anything that assumes engineering knowledge. Save that for the Technical Requirements section of the GDD.
-
-The person writing the GDD might be a designer, a producer, an artist, or someone learning game dev. Write for the least technical person in the room.
+Use plain language. Summarize the feature in one sentence before discussing it. No code snippets, formulas, or engine terminology. Write for the least technical person in the room.
 
 ---
 
-## The Pillar Gate
+## Pillar Gate
 
-Before any feature or system is added, **lead with a brief summary** of what it is. Then run the checks:
+Before adding any feature, lead with a brief summary. Then run the checks:
 
 ```
 FEATURE: Wall-running
-SUMMARY: The player can sprint along walls for a short distance, opening new paths and combat angles.
+SUMMARY: The player can sprint along walls for a short distance.
 
-Does it support the pillars?         → "Fluid movement" — yes. "Methodical combat" — tension.
-How does it connect to the core loop? → Adds a traversal option during the Act phase.
-Which systems does it touch?          → Movement, Combat, Camera, Level Design, Input.
-What's the scope cost?                → New animation set, navmesh updates, camera collision checks.
-Does it contradict anything?          → No existing feature conflicts.
+Does it support the pillars?         → yes/tension
+How does it connect to the core loop? → which phase
+Which systems does it touch?          → list every system
+What's the scope cost?                → trade-off named
+Does it contradict anything?          → check existing features
 ```
 
-The verdict goes into the system file:
-- **PASS** — serves pillars, connects, scope justified
-- **PASS with N flags** — each flag is `RESOLVED <date>`, `DEFERRED`, or `open` (spawns an OQ)
-- **BLOCK** — contradiction unresolved, designer decides
-
-**Always start with the summary.** The user needs to know what they're evaluating before they evaluate it.
+The verdict goes into the system file. Always start with the summary — the user needs context before evaluation.
 
 ---
 
-## Flowcharts in Chat
+## Flowcharts in chat
 
-Mermaid is great for rendered docs (Obsidian, GitHub) but **unreadable as raw text in a terminal**. When showing flowcharts in chat:
-
-- **In conversation:** use ASCII diagrams like these instead:
-
-```
-  [Observe] ──→ [Decide] ──→ [Act] ──→ [Feedback]
-                   ↑                        │
-                   └────────────────────────┘
-```
-
-Vertical for complex flows:
-
-```
-  Player sees enemy
-         ↓
-  Choose weapon
-    ↙      ↘
- Attack   Sneak
-    ↓        ↓
- Deal DMG  Bypass
-    ↓        ↓
-  Enemy    Loot
-  reacts   room
-```
-
-- **In the GDD doc file:** save the Mermaid version for rendering (` ```mermaid flowchart TD ... ``` `)
-- The rule is simple: **ASCII in chat, Mermaid in the doc**. Never paste raw Mermaid code in a conversation and expect the user to read it.
-- `python gdd.py matrix Jump,Run,Attack` also outputs a plain text table, not Mermaid.
+Show flowcharts as ASCII in conversation. Save the Mermaid version to the GDD file for rendered viewing.
 
 ---
 
@@ -168,12 +112,12 @@ Every feature against every other. Run on demand.
 
 ```
 PAIR: Jump + Attack
-  Can the player do both simultaneously? YES
+  Simultaneous? YES
   Result: Aerial attack. One swing per jump. Resets on landing.
   Status: ✅ Documented
 
 PAIR: Run + Shoot
-  Can the player do both simultaneously? YES
+  Simultaneous? YES
   Result: Speed -30%, spread +50%. Sprint cancels on first shot.
   Status: ⚠ Not yet documented
 ```
@@ -182,9 +126,9 @@ Pairs with undocumented interactions get flagged. The user decides.
 
 ---
 
-## Code-Aware GDD Audit
+## Code Audit
 
-Compare the GDD feature list against what exists in the project code:
+Compare GDD features against project code:
 
 ```
 F_gdd ∩ F_code  = Implemented + documented → verify match
@@ -196,52 +140,14 @@ The audit surfaces deltas. The user decides which is truth.
 
 ---
 
-## MDA Framework Analysis
-
-Apply Mechanics → Dynamics → Aesthetics to any feature or scenario.
-
-Predicts what the player actually experiences. Compares against the pillars. Flags gaps:
-
-"Your pillars say this game is about Discovery, but this feature's MDA profile produces Submission. The player will experience grinding, not exploring. Is that intentional?"
-
-The user decides. Maybe the gap is acceptable. Maybe they want to retune.
-
----
-
-## The Design Judge
-
-Full adversarial review. Hunts 20 design frauds including:
-
-- Pillar drift (feature without a pillar)
-- Loop orphan (mechanic not connected to core loop)
-- Tuning theater (prose that sounds like numbers without capturing relationships — "enemies get harder" vs "enemies scale faster than the player does, so fights get shorter and more lethal")
-- GDD-code drift (doc says one thing, code does another)
-- MDA mismatch (pillars say X, mechanics produce Y)
-- Pillar-pillar denial (active tension ignored)
-
-Verdict is a recommendation. The user decides what to act on.
-
----
-
-## Behavioral rules
-
-1. **Challenge, don't override.** When a contradiction is found, present it with options. Never proceed silently.
-2. **Leave decisions to the user.** Always. Recommend, flag tensions, surface trade-offs. The user decides.
-3. **Log everything.** Every decision, rationale, alternative, and accepted tension goes into `.design-context/`.
-4. **Never modify the GDD without asking.** Read, analyze, challenge, write to context. The GDD changes only when the user says so.
-
----
-
 ## CLI Tool: `gdd.py`
 
-This repo includes a standalone Python tool (`gdd.py`) that works on any agent, any OS — no dependencies.
+Standalone Python tool, no dependencies.
 
 | Command | What it does |
 |---|---|
-| `python gdd.py init` | Create `.design-context/` in current directory |
-| `python gdd.py template GDD-skeleton` | Print a template to stdout (GDD-skeleton, system-design, core-loop-canvas, balance-table, mda-reference, project-context) |
-| `python gdd.py pillar "The player can complete any level without attacking"` | Evaluate a pillar for clarity and direction |
-| `python gdd.py matrix Jump,Run,Attack,Shoot` | Generate a pairwise interaction matrix from comma-separated features |
-| `python gdd.py status` | Scan project for GDD + `.design-context/` health |
-
-Invoke these from anywhere Python 3 is installed. The agent can run them when the user asks, and the user can run them directly.
+| `python gdd.py init` | Create `.design-context/` |
+| `python gdd.py template GDD-skeleton` | Print a template |
+| `python gdd.py pillar "phrase"` | Evaluate a pillar |
+| `python gdd.py matrix Jump,Run,Attack` | Generate pairwise pairs |
+| `python gdd.py status` | Check project health |
